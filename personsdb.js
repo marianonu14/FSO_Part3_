@@ -1,9 +1,10 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
-const url = process.env.MONGODB_URI;
+const url = process.env.MONGODB_URI
 
-mongoose.connect(url)
-  .then(result => {
+mongoose
+  .connect(url)
+  .then((result) => {
     console.log('Connected to MongoDB')
   })
   .catch((error) => {
@@ -11,18 +12,24 @@ mongoose.connect(url)
   })
 
 const personSchema = new mongoose.Schema({
-  name: String,
-  number: String,
-});
+  name: {
+    type: String,
+    required: true,
+  },
+  number: {
+    type: String,
+    require: true,
+  },
+})
 
 personSchema.set('toJSON', {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString()
     delete returnedObject._id
     delete returnedObject.__v
-  }
+  },
 })
 
-const Person = mongoose.model('Person', personSchema);
+const Person = mongoose.model('Person', personSchema)
 
-module.exports = Person;
+module.exports = Person
